@@ -3,6 +3,7 @@ import 'package:gaziantep_nobetci_eczane/components/app_bar.dart';
 import 'package:gaziantep_nobetci_eczane/components/district_list.dart';
 import 'package:gaziantep_nobetci_eczane/components/error_view.dart';
 import 'package:gaziantep_nobetci_eczane/components/loading_indicator.dart';
+import 'package:gaziantep_nobetci_eczane/components/search_bar.dart';
 import 'package:gaziantep_nobetci_eczane/env.dart';
 import 'package:gaziantep_nobetci_eczane/model/pharmacy_model.dart';
 import 'package:gaziantep_nobetci_eczane/service/pharmacy/pharmacy_service.dart';
@@ -98,7 +99,7 @@ class _PharmacyListPageState extends State<PharmacyListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(city: "Gaziantep", onBack: () => Navigator.pop(context)),
+      appBar: CustomAppBar(title: "Gaziantep Nöbetçi Eczaneler",),
       backgroundColor: const Color(0xFFF6F6F6),
       body: RefreshIndicator(
         onRefresh: _loadPharmacies,
@@ -121,7 +122,7 @@ class _PharmacyListPageState extends State<PharmacyListPage> {
 
     return Column(
       children: [
-        SearchBar(
+        CustomSearchBar(
           controller: _searchController,
           onChanged: (value) {
             setState(() {

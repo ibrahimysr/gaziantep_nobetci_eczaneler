@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaziantep_nobetci_eczane/components/app_bar.dart';
 import 'package:gaziantep_nobetci_eczane/model/pharmacy_model.dart';
 
 class DistrictPharmaciesPage extends StatelessWidget {
@@ -16,23 +17,7 @@ class DistrictPharmaciesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          districtName,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
+      appBar: CustomAppBar(title: districtName),
       backgroundColor: const Color(0xFFF6F6F6),
       body: _buildSegmentedControl(context),
     );
@@ -61,7 +46,7 @@ class DistrictPharmaciesPage extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Colors.red,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Row(
