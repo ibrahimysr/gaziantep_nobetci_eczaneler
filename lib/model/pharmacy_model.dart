@@ -31,7 +31,7 @@ class Result {
   String? phone;
   String? loc;
 
-  Result({this.name, this.dist, this.address, this.phone, this.loc});
+  Result({this.name, this.dist, this.address, this.phone, this.loc, required String district});
 
   Result.fromJson(Map<String, dynamic> json) {
     name = json['name'];

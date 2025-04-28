@@ -4,6 +4,7 @@ import 'package:gaziantep_nobetci_eczane/components/app_bar.dart';
 import 'package:gaziantep_nobetci_eczane/components/segmented_control.dart';
 import 'package:gaziantep_nobetci_eczane/components/pharmacy_list_view.dart';
 import 'package:gaziantep_nobetci_eczane/components/pharmacy_map_view.dart';
+import 'package:gaziantep_nobetci_eczane/core/theme/color.dart';
 import 'package:gaziantep_nobetci_eczane/model/pharmacy_model.dart';
 
 class DistrictPharmaciesPage extends StatefulWidget {
@@ -30,7 +31,7 @@ class _DistrictPharmaciesPageState extends State<DistrictPharmaciesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: widget.districtName),
-      backgroundColor: const Color(0xFFF6F6F6),
+      backgroundColor: AppColors.background,
       body: Column(
         children: [
           SegmentedControl(

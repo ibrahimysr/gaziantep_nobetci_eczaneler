@@ -1,8 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:gaziantep_nobetci_eczane/components/home_container.dart';
 import 'package:gaziantep_nobetci_eczane/core/theme/color.dart';
+import 'package:gaziantep_nobetci_eczane/views/nearby_pharmacies_screen.dart';
 import 'package:gaziantep_nobetci_eczane/views/pharmacy_list_page.dart';
-
-
+import 'package:gaziantep_nobetci_eczane/model/pharmacy_model.dart';
+import 'package:gaziantep_nobetci_eczane/service/pharmacy/pharmacy_service.dart';
+import 'package:gaziantep_nobetci_eczane/env.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +19,152 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final PharmacyService _pharmacyService = PharmacyService();
+  final String _city = "gaziantep";
+  final String _apikey = AppSecrets.collectApiKey;
+
+  bool _isGettingLocationAndPharmacies = false;
+
+  Future<void> _findNearbyPharmacies() async {
+    if (_isGettingLocationAndPharmacies) return;
+
+    setState(() {
+      _isGettingLocationAndPharmacies = true;
+    });
+
+    LocationPermission permission;
+    Position? currentPosition;
+    List<Result> allPharmacies = [];
+
+    try {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        throw Exception('Konum servisleri kapalı. Lütfen açıp tekrar deneyin.');
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          throw Exception(
+              'Yakındaki eczaneleri bulmak için konum izni vermelisiniz.');
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        throw Exception(
+            'Konum izni kalıcı olarak reddedildi. Lütfen uygulama ayarlarından izin verin.');
+      }
+
+      print("Getting current location...");
+      currentPosition = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.medium);
+      print(
+          "Location obtained: ${currentPosition.latitude}, ${currentPosition.longitude}");
+
+      print("Fetching pharmacies from API for city: $_city");
+      try {
+        final response =
+            await _pharmacyService.getDietPlan(city: _city, apikey: _apikey);
+
+        if (response.success == true &&
+            response.result != null &&
+            response.result!.isNotEmpty) {
+          allPharmacies = response.result!; // API'den gelen listeyi ata
+        } else {
+          throw Exception('$_city için nöbetçi eczane bulunamadı. ' '}');
+        }
+      } catch (e) {
+        throw Exception('Eczaneler yüklenirken bir hata oluştu: $e');
+      }
+
+      List<PharmacyWithDistance> pharmaciesWithDistance = [];
+      final userLatLng =
+          LatLng(currentPosition.latitude, currentPosition.longitude);
+
+      for (var pharmacy in allPharmacies) {
+        if (pharmacy.loc != null && pharmacy.loc!.isNotEmpty) {
+          try {
+            final coordinates = pharmacy.loc!.split(',');
+            if (coordinates.length == 2) {
+              final latStr = coordinates[0].trim();
+              final lngStr = coordinates[1].trim();
+              if (latStr.isNotEmpty && lngStr.isNotEmpty) {
+                final lat = double.tryParse(latStr);
+                final lng = double.tryParse(lngStr);
+                if (lat != null &&
+                    lng != null &&
+                    lat >= -90 &&
+                    lat <= 90 &&
+                    lng >= -180 &&
+                    lng <= 180) {
+                  double distanceInMeters = Geolocator.distanceBetween(
+                      userLatLng.latitude, userLatLng.longitude, lat, lng);
+                  pharmaciesWithDistance
+                      .add(PharmacyWithDistance(pharmacy, distanceInMeters));
+                } else {
+                  log(" Invalid range for ${pharmacy.name}");
+                }
+              } else {
+                log(" Empty coord strings for ${pharmacy.name}");
+              }
+            } else {
+              log(" Invalid format for ${pharmacy.name}");
+            }
+          } catch (e) {
+            log(" Distance calc error for ${pharmacy.name}: $e");
+          }
+        } else {
+          log(" Skipping ${pharmacy.name}, no loc.");
+        }
+      }
+
+      if (pharmaciesWithDistance.isEmpty) {
+        throw Exception('Konumu hesaplanabilen eczane bulunamadı.');
+      }
+
+      pharmaciesWithDistance
+          .sort((a, b) => a.distanceInMeters.compareTo(b.distanceInMeters));
+      List<Result> sortedPharmacies =
+          pharmaciesWithDistance.map((pwd) => pwd.pharmacy).toList();
+
+      setState(() {
+        _isGettingLocationAndPharmacies = false;
+      });
+
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NearbyPharmaciesPage(
+              pharmacies: sortedPharmacies,
+              userLocation: userLatLng,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      _showErrorSnackbar(e.toString().replaceFirst("Exception: ", ""));
+      setState(() {
+        _isGettingLocationAndPharmacies = false;
+      });
+    }
+  }
+
+  void _showErrorSnackbar(String message) {
+    if (mounted) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message, style: const TextStyle(color: Colors.white)),
+          backgroundColor: Colors.redAccent,
+          duration: const Duration(seconds: 4),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             onPressed: () {},
             icon: Badge(
-              label: Text('2'),
+              label: const Text('2'),
               child: Icon(Icons.notifications_outlined, color: AppColors.text),
             ),
           ),
@@ -139,12 +292,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     AppColors.primary.withOpacity(0.8)
                   ],
                   begin: Alignment.topLeft,
-                  end: Alignment.bottomRight, 
-                  
+                  end: Alignment.bottomRight,
                 ),
-                onTap: () {  
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PharmacyListPage())); 
-                  print("sadsa");
+                onTap: () {
+                  if (_isGettingLocationAndPharmacies) return;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PharmacyListPage()));
                 },
               ),
               const SizedBox(height: 16),
@@ -160,107 +315,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
+                onTap: _isGettingLocationAndPharmacies
+                    ? null
+                    : _findNearbyPharmacies,
               ),
               const SizedBox(height: 16),
-              HomeContainer(
-                icon: Icons.favorite_outline,
-                title: "FAVORİLERİM",
-                iconBackground: AppColors.accent,
-                gradient: LinearGradient(
-                  colors: [AppColors.accent, AppColors.accent.withOpacity(0.8)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+              if (_isGettingLocationAndPharmacies)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const CircularProgressIndicator(),
+                      const SizedBox(width: 16),
+                      Text("Eczaneler ve konum yükleniyor...",
+                          style: TextStyle(color: AppColors.text))
+                    ],
+                  ),
                 ),
-              ),
               const SizedBox(height: 24),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class HomeContainer extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final Color iconBackground;
-  final LinearGradient gradient;
-  final Function()? onTap;
-
-  const HomeContainer({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.iconBackground,
-    required this.gradient, this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: gradient,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: iconBackground.withOpacity(0.3),
-            spreadRadius: 0,
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Icon(
-                        icon,
-                        color: Colors.white,
-                        size: 22,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                ),
-              ],
-            ),
           ),
         ),
       ),
