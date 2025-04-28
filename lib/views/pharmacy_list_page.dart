@@ -4,6 +4,7 @@ import 'package:gaziantep_nobetci_eczane/components/district_list.dart';
 import 'package:gaziantep_nobetci_eczane/components/error_view.dart';
 import 'package:gaziantep_nobetci_eczane/components/loading_indicator.dart';
 import 'package:gaziantep_nobetci_eczane/components/search_bar.dart';
+import 'package:gaziantep_nobetci_eczane/core/theme/color.dart';
 import 'package:gaziantep_nobetci_eczane/env.dart';
 import 'package:gaziantep_nobetci_eczane/model/pharmacy_model.dart';
 import 'package:gaziantep_nobetci_eczane/service/pharmacy/pharmacy_service.dart';
@@ -59,9 +60,12 @@ class _PharmacyListPageState extends State<PharmacyListPage> {
     });
 
     try {
-      final response = await _pharmacyService.getDietPlan(city: _city, apikey: _apikey);
+      final response =
+          await _pharmacyService.getDietPlan(city: _city, apikey: _apikey);
 
-      if (response.success == true && response.result != null && response.result!.isNotEmpty) {
+      if (response.success == true &&
+          response.result != null &&
+          response.result!.isNotEmpty) {
         _districtPharmacies = {};
         for (var pharmacy in response.result!) {
           String district = pharmacy.dist?.trim() ?? "Diğer";
@@ -91,16 +95,19 @@ class _PharmacyListPageState extends State<PharmacyListPage> {
     }
 
     return _allDistricts
-        .where((district) => district.toLowerCase().contains(_searchQuery.toLowerCase()))
+        .where((district) =>
+            district.toLowerCase().contains(_searchQuery.toLowerCase()))
         .toList()
-        ..sort();
+      ..sort();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Gaziantep Nöbetçi Eczaneler",),
-      backgroundColor: const Color(0xFFF6F6F6),
+      appBar: CustomAppBar(
+        title: "Gaziantep Nöbetçi Eczaneler",
+      ),
+      backgroundColor: AppColors.background,
       body: RefreshIndicator(
         onRefresh: _loadPharmacies,
         child: _buildBody(),

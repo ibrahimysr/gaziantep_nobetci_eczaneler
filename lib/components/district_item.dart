@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaziantep_nobetci_eczane/core/theme/color.dart';
 import 'package:gaziantep_nobetci_eczane/model/pharmacy_model.dart';
 import 'package:gaziantep_nobetci_eczane/views/district_pharmacies_screen.dart';
 
@@ -19,7 +20,7 @@ class DistrictItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(16),
       ),
       child: ListTile(
