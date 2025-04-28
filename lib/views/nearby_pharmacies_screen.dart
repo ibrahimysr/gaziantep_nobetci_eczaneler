@@ -52,7 +52,9 @@ class _NearbyPharmaciesPageState extends State<NearbyPharmaciesPage> {
             lat < -90 ||
             lat > 90 ||
             lng < -180 ||
-            lng > 180) return false;
+            lng > 180) {
+          return false;
+        }
         double distanceInMeters = Geolocator.distanceBetween(
           widget.userLocation.latitude,
           widget.userLocation.longitude,

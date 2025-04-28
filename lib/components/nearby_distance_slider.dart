@@ -24,7 +24,7 @@ class NearbyDistanceSlider extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha:0.1),
             spreadRadius: 1,
             blurRadius: 3,
             offset: const Offset(0, 1),
@@ -57,12 +57,12 @@ class NearbyDistanceSlider extends StatelessWidget {
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
               activeTrackColor: Colors.red,
-              inactiveTrackColor: Colors.red.withOpacity(0.2),
+              inactiveTrackColor: Colors.red.withValues(alpha:0.2),
               thumbColor: Colors.red,
-              overlayColor: Colors.red.withOpacity(0.2),
+              overlayColor: Colors.red.withValues(alpha:0.2),
               tickMarkShape: const RoundSliderTickMarkShape(tickMarkRadius: 3),
               activeTickMarkColor: Colors.white,
-              inactiveTickMarkColor: Colors.red.withOpacity(0.5),
+              inactiveTickMarkColor: Colors.red.withValues(alpha:0.5),
             ),
             child: Slider(
               value: selectedDistance,

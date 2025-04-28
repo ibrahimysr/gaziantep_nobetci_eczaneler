@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -105,7 +107,7 @@ class NearbyPharmacyMapView extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withValues(alpha:0.8),
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
@@ -128,7 +130,9 @@ class NearbyPharmacyMapView extends StatelessWidget {
               }
             }
           }
-        } catch (e) {}
+        } catch (e) { 
+          log("error: $e");
+        }
       }
     }
 
@@ -187,8 +191,8 @@ class NearbyPharmacyMapView extends StatelessWidget {
                       CircleMarker(
                         point: userLocation,
                         radius: selectedDistance * 1000,
-                        color: Colors.red.withOpacity(0.1),
-                        borderColor: Colors.red.withOpacity(0.5),
+                        color: Colors.red.withValues(alpha:0.1),
+                        borderColor: Colors.red.withValues(alpha:0.5),
                         borderStrokeWidth: 2,
                       ),
                     ],
@@ -213,7 +217,9 @@ class NearbyPharmacyMapView extends StatelessWidget {
                           if (currentZoom < 18.0) {
                             mapController.move(mapController.camera.center, currentZoom + 1);
                           }
-                        } catch (e) {}
+                        } catch (e) { 
+                          log("error: $e");
+                        }
                       },
                     ),
                     const SizedBox(height: 8),
@@ -229,7 +235,9 @@ class NearbyPharmacyMapView extends StatelessWidget {
                           if (currentZoom > 5.0) {
                             mapController.move(mapController.camera.center, currentZoom - 1);
                           }
-                        } catch (e) {}
+                        } catch (e) { 
+                          log("error: $e");
+                        }
                       },
                     ),
                   ],
@@ -248,7 +256,9 @@ class NearbyPharmacyMapView extends StatelessWidget {
                   onPressed: () {
                     try {
                       mapController.move(initialCenter, initialZoom);
-                    } catch (e) {}
+                    } catch (e) { 
+                      log("error: $e");
+                    }
                   },
                 ),
               ),

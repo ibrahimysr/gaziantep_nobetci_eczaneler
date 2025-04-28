@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -66,7 +68,7 @@ class PharmacyMapView extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withValues(alpha:0.8),
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
@@ -95,7 +97,9 @@ class PharmacyMapView extends StatelessWidget {
               }
             }
           }
-        } catch (e) {}
+        } catch (e) { 
+          log("error: $e");
+        }
       }
     }
 
@@ -144,7 +148,9 @@ class PharmacyMapView extends StatelessWidget {
                     if (currentZoom < 18.0) {
                       mapController.move(mapController.camera.center, currentZoom + 1);
                     }
-                  } catch (e) {}
+                  } catch (e) { 
+                    log("error: $e");
+                  }
                 },
               ),
               const SizedBox(height: 8),
@@ -160,7 +166,9 @@ class PharmacyMapView extends StatelessWidget {
                     if (currentZoom > 5.0) {
                       mapController.move(mapController.camera.center, currentZoom - 1);
                     }
-                  } catch (e) {}
+                  } catch (e) {
+                    log("error: $e");
+                  }
                 },
               ),
             ],
@@ -178,7 +186,9 @@ class PharmacyMapView extends StatelessWidget {
             onPressed: () {
               try {
                 mapController.move(center, initialZoom);
-              } catch (e) {}
+              } catch (e)  {
+                log("error: $e");
+               }
             },
           ),
         ),

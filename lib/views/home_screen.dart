@@ -56,21 +56,21 @@ class _HomeScreenState extends State<HomeScreen> {
             'Konum izni kalıcı olarak reddedildi. Lütfen uygulama ayarlarından izin verin.');
       }
 
-      print("Getting current location...");
+      log("Getting current location...");
       currentPosition = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.medium);
-      print(
+      log(
           "Location obtained: ${currentPosition.latitude}, ${currentPosition.longitude}");
 
-      print("Fetching pharmacies from API for city: $_city");
+      log("Fetching pharmacies from API for city: $_city");
       try {
         final response =
-            await _pharmacyService.getDietPlan(city: _city, apikey: _apikey);
+            await _pharmacyService.getPharmacies(city: _city, apikey: _apikey);
 
         if (response.success == true &&
             response.result != null &&
             response.result!.isNotEmpty) {
-          allPharmacies = response.result!; // API'den gelen listeyi ata
+          allPharmacies = response.result!; 
         } else {
           throw Exception('$_city için nöbetçi eczane bulunamadı. ' '}');
         }
@@ -80,7 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
       List<PharmacyWithDistance> pharmaciesWithDistance = [];
       final userLatLng =
-          LatLng(currentPosition.latitude, currentPosition.longitude);
+          LatLng(currentPosition.latitude, currentPosition.longitude); 
+          // LatLng(37.0662, 37.3833); // Gaziantep coordinates for testing
 
       for (var pharmacy in allPharmacies) {
         if (pharmacy.loc != null && pharmacy.loc!.isNotEmpty) {
@@ -211,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha:0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 2),
                     ),
@@ -223,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.1),
+                        color: AppColors.primary.withValues(alpha:0.1),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -263,10 +264,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.accent.withOpacity(0.1),
+                  color: AppColors.accent.withValues(alpha:0.1),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                      color: AppColors.accent.withOpacity(0.3), width: 1),
+                      color: AppColors.accent.withValues(alpha:0.3), width: 1),
                 ),
                 child: Row(
                   children: [
@@ -289,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 gradient: LinearGradient(
                   colors: [
                     AppColors.primary,
-                    AppColors.primary.withOpacity(0.8)
+                    AppColors.primary.withValues(alpha:0.8)
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -310,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 gradient: LinearGradient(
                   colors: [
                     AppColors.secondary,
-                    AppColors.secondary.withOpacity(0.8)
+                    AppColors.secondary.withValues(alpha:0.8)
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,

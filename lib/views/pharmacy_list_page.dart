@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gaziantep_nobetci_eczane/components/app_bar.dart';
 import 'package:gaziantep_nobetci_eczane/components/district_list.dart';
@@ -61,7 +63,7 @@ class _PharmacyListPageState extends State<PharmacyListPage> {
 
     try {
       final response =
-          await _pharmacyService.getDietPlan(city: _city, apikey: _apikey);
+          await _pharmacyService.getPharmacies(city: _city, apikey: _apikey);
 
       if (response.success == true &&
           response.result != null &&
@@ -79,7 +81,7 @@ class _PharmacyListPageState extends State<PharmacyListPage> {
       }
     } catch (e) {
       _errorMessage = 'Eczaneler yüklenirken bir hata oluştu: $e';
-      print("Hata Detayı: $e");
+      log("Hata Detayı: $e");
     } finally {
       if (mounted) {
         setState(() {
