@@ -42,10 +42,10 @@ class DistrictList extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16, top: 16, bottom: 8),
               child: Text(
                 letter,
-                style: const TextStyle(
+                style:  TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.red,
+                  color:  Colors.redAccent.shade700
                 ),
               ),
             ),

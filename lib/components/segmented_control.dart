@@ -36,7 +36,7 @@ class SegmentedControl extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
-                  color: showListView ? Colors.red : Colors.white,
+                  color: showListView ? Colors.redAccent.shade700 : Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(

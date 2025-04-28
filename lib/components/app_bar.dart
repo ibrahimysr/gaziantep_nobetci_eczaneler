@@ -92,7 +92,7 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.red,Colors.red.withValues(alpha:0.7)],
+            colors: [ Colors.redAccent.shade700, Colors.redAccent.shade700.withValues(alpha:0.7)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

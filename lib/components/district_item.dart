@@ -30,7 +30,7 @@ class DistrictItem extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        trailing: const Icon(Icons.chevron_right),
+        trailing:  Icon(Icons.chevron_right, color:  Colors.redAccent.shade700,),
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         onTap: () {
           if (pharmacies.isNotEmpty) {

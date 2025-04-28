@@ -45,10 +45,10 @@ class PharmacyItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
+                 Icon(
                   Icons.location_on,
                   size: 22,
-                  color: Colors.grey,
+                  color:  Colors.redAccent.shade400
                 ),
                 const SizedBox(width: 10),
                 Expanded(
@@ -67,10 +67,10 @@ class PharmacyItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: Row(
               children: [
-                const Icon(
+                 Icon(
                   Icons.access_time,
                   size: 22,
-                  color: Colors.grey,
+                  color: Colors.redAccent.shade400
                 ),
                 const SizedBox(width: 10),
                 Text(
@@ -101,25 +101,30 @@ class PharmacyItem extends StatelessWidget {
                   ),
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFE8F5E9),
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all( 
+                        color: Colors.redAccent.shade700,
+                        width: 0.75,
+                        
+                      ),
+                      borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                       ),
                     ),
-                    child: const Row(
+                    child:  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.phone,
-                          color: Colors.green,
+                          color:  Colors.redAccent.shade700,
                           size: 20,
                         ),
                         SizedBox(width: 8),
                         Text(
                           'Ara',
                           style: TextStyle(
-                            color: Colors.green,
+                            color: Colors.black,
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                           ),
@@ -144,25 +149,30 @@ class PharmacyItem extends StatelessWidget {
                   ),
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFE3F2FD),
+                    decoration:  BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all( 
+                        color: Colors.redAccent.shade700,
+                        width: 0.75,
+                        
+                      ),
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(15),
                       ),
                     ),
-                    child: const Row(
+                    child:  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.directions,
-                          color: Colors.blue,
+                          color:  Colors.redAccent.shade700,
                           size: 22,
                         ),
                         SizedBox(width: 8),
                         Text(
                           'Yön Tarifi',
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.black,
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                           ),
