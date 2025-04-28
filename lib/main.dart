@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaziantep_nobetci_eczane/views/home_screen.dart';
 import 'package:gaziantep_nobetci_eczane/views/pharmacy_list_page.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: PharmacyListPage()
+      home: HomeScreen()
     );
   }
 }
