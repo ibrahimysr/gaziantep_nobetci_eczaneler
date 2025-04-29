@@ -1,16 +1,55 @@
-# gaziantep_nobetci_eczane
+Gaziantep Nöbetçi Eczane Uygulaması
+Bu uygulama, Gaziantep'teki nöbetçi eczaneleri kolayca bulmanızı sağlar. Kullanıcı dostu arayüzü ile ilçelere göre filtreleme yapabilir, yakındaki eczaneleri mesafeye göre listeleyebilir ve haritada görüntüleyebilirsiniz.
+Özellikler
 
-A new Flutter project.
+Nöbetçi Eczane Arama: Gaziantep'teki nöbetçi eczaneleri hızlıca bulun.
+İlçelere Göre Filtreleme: Eczaneleri ilçelere göre filtreleyerek istediğiniz bölgedeki nöbetçi eczaneleri görüntüleyin.
+Yakındaki Eczaneler: Konumunuza göre en yakın nöbetçi eczaneleri mesafeye göre sıralayın.
+Harita Görünümü: Eczaneleri harita üzerinde görselleştirin ve kolayca yol tarifi alın.
+Liste ve Harita Modu: Eczaneleri liste olarak veya harita üzerinde görüntüleme seçenekleri.
 
-## Getting Started
+Ekran Görüntüleri
+Ana Sayfa
+Ana sayfada ilçelere göre nöbetçi eczane bulma ve yakındaki eczaneleri listeleme seçenekleri.
+İlçelere Göre Arama
+İlçelere göre nöbetçi eczane arama ekranı.
+Eczane Listesi
+Seçilen ilçedeki nöbetçi eczanelerin listesi ve detayları.
+Kurulum
 
-This project is a starting point for a Flutter application.
+Bu depoyu klonlayın:git clone https://github.com/ibrahimysr/gaziantep_nobetci_eczaneler.git
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Proje dizinine gidin:cd gaziantep_nobetci_eczaneler
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+Gerekli bağımlılıkları yükleyin:flutter pub get
+
+
+Uygulamayı başlatın:flutter run 
+
+
+
+
+
+Ön Gereksinimler
+
+Flutter SDK: Flutter Kurulumu
+Dart: Flutter ile birlikte gelir.
+Android veya iOS cihaz/emülatör.
+
+Kullanım
+
+Uygulamayı açtıktan sonra ana sayfada "İlçelere Göre" veya "Yakınımdakiler" seçeneklerinden birini seçin.
+İlçelere göre arama yapmak için bir ilçe seçin ve nöbetçi eczaneleri listeleyin.
+Yakındaki eczaneleri bulmak için konum izni verin ve mesafe tercihlerinizi ayarlayın.
+Eczaneleri haritada görmek için "Harita" seçeneğine geçiş yapın.
+
+Teknolojiler
+
+Framework: Flutter (Dart)
+Harita:flutter_map 
+Veri Kaynağı: Gaziantep nöbetçi eczane verileri api
+
+
+![Ana Sayfa](https://imgur.com/a/ASu0N3g)
