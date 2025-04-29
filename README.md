@@ -27,7 +27,7 @@ Gaziantep ilindeki nöbetçi eczaneleri kolayca bulmanızı sağlayan mobil uygu
   </tr>
   <tr>
     <td><img src="https://i.imgur.com/tnpqK1S.png" alt="Harita Görünümü" /></td>
-    <td><img src="[https://via.placeholder.com/250](https://i.imgur.com/32cjXUg.png)" alt="Mesafe Seçimi" /></td>
+    <td><img src="https://i.imgur.com/32cjXUg.png" alt="Mesafe Seçimi" /></td>
   </tr>
   <tr>
     <td>Harita Görünümü</td>
