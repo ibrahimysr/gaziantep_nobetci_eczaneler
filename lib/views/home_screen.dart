@@ -80,8 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
       List<PharmacyWithDistance> pharmaciesWithDistance = [];
       final userLatLng =
-          LatLng(currentPosition.latitude, currentPosition.longitude); 
-          // LatLng(37.0662, 37.3833); // Gaziantep coordinates for testing
+          // LatLng(currentPosition.latitude, currentPosition.longitude); 
+          LatLng(37.0662, 37.3833); // Gaziantep coordinates for testing
 
       for (var pharmacy in allPharmacies) {
         if (pharmacy.loc != null && pharmacy.loc!.isNotEmpty) {

@@ -171,7 +171,8 @@ class _DistrictPharmaciesPageState extends State<DistrictPharmaciesPage> {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Arama özelliği (${pharmacy.phone ?? 'Numara Yok'}) yakında!'),
+                        content: Text(
+                            'Arama özelliği (${pharmacy.phone ?? 'Numara Yok'}) yakında!'),
                         backgroundColor: Colors.green,
                       ),
                     );
@@ -182,7 +183,8 @@ class _DistrictPharmaciesPageState extends State<DistrictPharmaciesPage> {
                     backgroundColor: Colors.green,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
                   ),
                 ),
               ),
@@ -193,7 +195,8 @@ class _DistrictPharmaciesPageState extends State<DistrictPharmaciesPage> {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Yön tarifi (${pharmacy.loc ?? 'Konum Yok'}) yakında!'),
+                        content: Text(
+                            'Yön tarifi (${pharmacy.loc ?? 'Konum Yok'}) yakında!'),
                         backgroundColor: Colors.blue,
                       ),
                     );
@@ -204,7 +207,8 @@ class _DistrictPharmaciesPageState extends State<DistrictPharmaciesPage> {
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
               ),

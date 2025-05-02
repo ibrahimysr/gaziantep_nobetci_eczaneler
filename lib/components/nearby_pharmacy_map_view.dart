@@ -85,7 +85,7 @@ class NearbyPharmacyMapView extends StatelessWidget {
                             message: pharmacy.name ?? 'Eczane',
                             child: Container(
                               decoration: const BoxDecoration(
-                                color: Colors.red,
+                              
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
@@ -191,7 +191,7 @@ class NearbyPharmacyMapView extends StatelessWidget {
                       CircleMarker(
                         point: userLocation,
                         radius: selectedDistance * 1000,
-                        color: Colors.red.withValues(alpha:0.1),
+                        color: Colors.red,
                         borderColor: Colors.red.withValues(alpha:0.5),
                         borderStrokeWidth: 2,
                       ),
