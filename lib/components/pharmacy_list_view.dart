@@ -17,7 +17,7 @@ class PharmacyListView extends StatelessWidget {
     return pharmacies.isEmpty
         ? const Center(child: Text('Bu ilçede nöbetçi eczane bulunamadı.'))
         : ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             itemCount: pharmacies.length,
             itemBuilder: (context, index) {
               final pharmacy = pharmacies[index];
